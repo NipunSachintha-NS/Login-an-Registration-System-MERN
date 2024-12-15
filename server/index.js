@@ -16,6 +16,24 @@ app.post('/register', (req, res) => {
         .catch(err => res.json(err))    
     })
 
+
+app.post("/login", (req,res) =>{
+    const {email, password} = req.body;
+    EmployeeModel.findOne({email:email})
+    .then(user => {
+        if(user) {
+            if(user.password === password){
+                res.json("Login Succussfuly")
+            } else {
+                res.json("The password is incorrect")
+            }
+        } else {
+            res.json("No record existed")  
+        }
+    }).catch(err => console.log(err))
+})
+
+
 app.listen(3001, () => {
     console.log("server is Running")
 })
